@@ -17,10 +17,10 @@ class Main {
      */
     public static function run(): void {
         $scrapper = new Scrapper();
+        $excel = new Excel();
+
         $data = $scrapper->scrap();
         
-        
-        (new Excel())->sendToExcel($data);
-
+        return $excel->sendToExcel($data);
     }
 }
