@@ -30,30 +30,29 @@ class Excel {
                 "Author 5", "Author 5 Institution", "Author 6", "Author 6 Institution", "Author 7",
                 "Author 7 Institution", "Author 8", "Author 8 Institution", "Author 9", "Author 9 Institution",
             ];
-            
+
             $titlesFromValues = WriterEntityFactory::createRowFromArray($titleCells, $boldStyle);
             $writer->addRow($titlesFromValues);
-            
+
             $style = (new \Box\Spout\Writer\Common\Creator\Style\StyleBuilder())
                 ->setFontSize(12)
                 ->setCellAlignment(\Box\Spout\Common\Entity\Style\CellAlignment::CENTER)
                 ->build();
 
-                    foreach ($data as $element) {
-                    
-                        $cells = [];
-                        $cells[] = $element->id ?? "";
-                        $cells[] = $element->title ?? "";
-                        $cells[] = $element->type ?? "";
-                                                
-                        foreach ($element->authors ?? [] as $author) {
-                            $cells[] = $author->name;
-                            $cells[] = $author->institution;
-                            
-                        }
-                        $rowFromValues = WriterEntityFactory::createRowFromArray($cells, $style);
-                        $writer->addRow($rowFromValues);
-                    }
+            foreach ($data as $element) {
+                $cells = [];
+                $cells[] = $element->id ?? "";
+                $cells[] = $element->title ?? "";
+                $cells[] = $element->type ?? "";
+
+                foreach ($element->authors ?? [] as $author) {
+                    $cells[] = $author->name;
+                    $cells[] = $author->institution;
+                }
+
+                $rowFromValues = WriterEntityFactory::createRowFromArray($cells, $style);
+                $writer->addRow($rowFromValues);
+            }
 
             $writer->close();
             echo "Success";
